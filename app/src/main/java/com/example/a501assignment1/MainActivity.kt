@@ -12,6 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.a501assignment1.ui.theme._501Assignment1Theme
+//imports added to make button work
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Button
+import androidx.compose.runtime.*
+import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,11 +24,23 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             _501Assignment1Theme {
+                //var clicked = false
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "World",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    var clicked by remember { mutableStateOf(false) }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
+                            .padding(16.dp) // I heard dp is the best use of
+                                            // pixel measurement in Android Studio
+                    ) {
+                        Button(onClick = {
+                            clicked = true //one time change on clicked variable
+                        }) {
+                            Text("Click me")
+                        }
+                        if (clicked) {Greeting(name = "World")}
+                    }
                 }
             }
         }
